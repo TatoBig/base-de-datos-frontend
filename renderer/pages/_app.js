@@ -1,8 +1,11 @@
 import { useEffect } from 'react'
+
 import { ThemeProvider } from '@material-ui/styles'
+import { CssBaseline } from '@material-ui/core'
+
+import Default from '../layouts/Default'
 import Head from 'next/head'
 import theme from '../services/material-ui'
-import Default from '../layouts/Default'
 
 import '../styles/globals.css'
 
@@ -17,6 +20,7 @@ function MyApp ({ Component, pageProps }) {
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Layout>
         <Head>
           <meta

@@ -1,64 +1,77 @@
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState } from 'react'
+
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
 import { useRouter } from 'next/dist/client/router'
 import Input from 'components/controls/Input'
-import { makeStyles, Button } from '@material-ui/core'
+import { Button, Typography } from '@material-ui/core'
 
-const useStyles = makeStyles({
-  // test: {
-  //   marginTop: 16
-  // }
+// const useStyles = makeStyles({
+//   // test: {
+//   //   marginTop: 16
+//   // }
+// })
+
+const schema = yup.object().shape({
+  test: yup.string().required('Test')
 })
 
 const Home = () => {
   const router = useRouter()
-  // const txt = ''
-  const classes = useStyles()
+  // const classes = useStyles()
+  const { handleSubmit, control, formState: { errors } } = useForm({
+    mode: 'onChange',
+    resolver: yupResolver(schema)
+  })
 
   const [input, setInput] = useState('')
   const [message, setMessage] = useState(null)
 
-  useEffect(() => {
-    const handleMessage = (event, message) => setMessage(message)
-    window.electron.message.on(handleMessage)
-
-    return () => {
-      window.electron.message.off(handleMessage)
-    }
-  }, [])
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    window.electron.message.send(input)
-    setMessage(null)
+  const onSubmit = (data) => {
+    setMessage(data.test)
   }
 
   return (
     <Fragment>
-      <h1>Electron</h1>
+      <Typography variant="h1">Electron</Typography>
+      <Typography variant="h5">{message}</Typography>
 
-      {message && <p>{message}</p>}
-      <Input/>
-
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          error={errors.test}
+          control={control}
+          label="Test"
+          name="test"
+        />
+        <Input
+          error={errors.test}
+          control={control}
+          label="Test"
+          name="test"
+        />
+        <Input
+          error={errors.test}
+          control={control}
+          label="Test"
+          name="test"
+        />
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <button className={classes.test} type="submit">
+        <Button type="submit" variant="contained" color="primary">
           Submit
-        </button>
+        </Button>
+        <Button type="submit" variant="contained" color="secondary">
+          Cancelar
+        </Button>
       </form>
       <Button variant="text" color="default" onClick={() => router.push('/test')}>
         Button test
       </Button>
-      <style jsx>{`
-        h1 {
-          color: red;
-          font-size: 50px;
-        }
-      `}</style>
     </Fragment>
   )
 }

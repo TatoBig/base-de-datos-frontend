@@ -1,41 +1,112 @@
 import { createTheme } from '@material-ui/core/styles'
-import { grey, pink, blue } from '@material-ui/core/colors'
+
+// ---- Background Colors
+const backgroundColor = '#383d3b'
+const paperColor = '#494949'
+const drawerColor = '#7c7c7c'
+const textFieldColor = '#545454'
+
+// ---- Font Colors
+const fontColor = '#eee5e9'
+const darkFontColor = '#000000'
+
+// ---- Error Colors
+const errorColor = '#ED4245'
+
+// ---- Primary Colors
+const primaryColor = '#52dee5'
+const palePrimaryColor = '#92dce5'
 
 const theme = createTheme({
+  overrides: {
+    // Style sheet name ⚛️
+    MuiButton: {
+      // Name of the rule
+      text: {
+        // Some CSS
+        color: fontColor
+      }
+    },
+    MuiTypography: {
+      colorInherit: {
+        color: darkFontColor
+      },
+      root: {
+        color: fontColor
+      }
+    },
+    // Textfields --
+    MuiTextField: {
+      root: {
+        backgroundColor: textFieldColor,
+        borderRadius: '6px'
+      }
+    },
+    // TextInput
+    MuiInputBase: {
+      root: {
+        color: fontColor
+      }
+    },
+    // TextField Label
+    MuiInputLabel: {
+      root: {
+        color: fontColor,
+        '&$error': {
+          color: errorColor,
+          fontWeight: 'bold'
+        }
+      }
+    },
+    // Error text
+    MuiFormHelperText: {
+      root: {
+        color: fontColor,
+        '&$error': {
+          color: errorColor,
+          fontWeight: 'bold',
+          backgroundColor: 'transparent'
+        }
+      }
+    },
+    MuiListItemText: {
+      primary: {
+        color: fontColor
+      }
+    },
+    MuiCssBaseline: {
+      '@global': {
+        // html: {
+        //   WebkitFontSmoothing: 'auto'
+        // },
+        body: {
+          padding: 0,
+          margin: 0,
+          fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif',
+          backgroundColor: backgroundColor
+        }
+      }
+    }
+  },
   palette: {
     primary: {
-      main: blue[500]
+      main: primaryColor
     },
     secondary: {
-      main: pink.A400
+      main: '#ad211a'
+    },
+    fontColor: {
+      main: fontColor
+    },
+    paper: {
+      background: paperColor
     },
     drawer: {
-      light: '#2c4774',
-      main: '#1c2d49',
-      dark: '#17243b'
+      background: drawerColor,
+      toolbar: palePrimaryColor
     },
-    onDrawer: {
-      light: '#ffffff',
-      main: '#d2d5dc',
-      dark: '#a4aab6'
-    },
-    background: {
-      paper: '#ffffff',
-      default: '#ffffff',
-      drawer: '#1c2d49'
-    },
-    text: {
-      primary: '#1c2d49',
-      secondary: '#a4aab6',
-      onDrawer: '#f4f5f7'
-    },
-    buttons: {
-      submit: '#ffffff',
-      back: '#ff0000',
-      close: grey[500],
-      toggle: '#444444',
-      selected: '#2196f3',
-      simple: '#233044'
+    table: {
+      head: palePrimaryColor
     }
   }
 })
