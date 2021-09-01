@@ -1,8 +1,8 @@
-import Typography from '@material-ui/core/Typography'
+import UserComponent from 'components/test/UserComponent'
 
 const index = () => {
   return (
-    <Typography variant="h1">Ventas</Typography>
+    <UserComponent />
   )
 }
 

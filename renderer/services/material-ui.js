@@ -3,7 +3,7 @@ import { createTheme } from '@material-ui/core/styles'
 // ---- Background Colors
 const backgroundColor = '#383d3b'
 const paperColor = '#494949'
-const drawerColor = '#7c7c7c'
+const drawerColor = '#494949'
 const textFieldColor = '#545454'
 
 // ---- Font Colors
@@ -14,8 +14,8 @@ const darkFontColor = '#000000'
 const errorColor = '#ED4245'
 
 // ---- Primary Colors
-const primaryColor = '#52dee5'
-const palePrimaryColor = '#92dce5'
+const primaryColor = '#FFE459'
+const palePrimaryColor = '#FFF2B2'
 
 const theme = createTheme({
   overrides: {

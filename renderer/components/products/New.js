@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/dist/client/router'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import eleFetch from 'electron-fetch'
 
 import Card from 'components/core/Card'
 import Input from 'components/controls/Input'
@@ -16,8 +15,6 @@ const schema = yup.object().shape({
   nit: yup.string().required('Debe ingresar un NIT')
 })
 
-// const url = 'http://localhost:8081'
-
 const New = () => {
   const router = useRouter()
   const { handleSubmit, control, formState: { errors } } = useForm({
@@ -25,15 +22,8 @@ const New = () => {
     resolver: yupResolver(schema)
   })
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     console.log(data)
-    try {
-      await eleFetch('http://localhost:8080/api/users')
-        .then(response => response.json())
-        .then(data => console.log(data))
-    } catch (e) {
-      console.log(e)
-    }
   }
 
   return (
@@ -41,22 +31,22 @@ const New = () => {
       <Card title="Título">
         <Form handleSubmit={handleSubmit} onSubmit={onSubmit} onCancel={() => router.push('/customers')}>
           <Input
-            error={errors.firstName}
+            error={errors.name}
             control={control}
             label="Nombre"
-            name="firstName"
+            name="name"
           />
           <Input
-            error={errors.lastName}
+            error={errors.cost}
             control={control}
-            label="Apellido"
-            name="lastName"
+            label="Costo"
+            name="cost"
           />
           <Input
-            error={errors.nit}
+            error={errors.price}
             control={control}
-            label="NIT"
-            name="nit"
+            label="Precio"
+            name="price"
           />
         </Form>
       </Card>
@@ -65,19 +55,3 @@ const New = () => {
 }
 
 export default New
-
-/*    try {
-      const requestOptions = {
-        method: 'POST',
-        body: JSON.stringify({ matrix: matrix }),
-        headers: { 'Content-Type': 'application/json' }
-      }
-      await fetch(`${url}/solution1`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          setDetResult(data.result)
-        })
-    } catch (e) {
-      console.log(e)
-    }
-    */

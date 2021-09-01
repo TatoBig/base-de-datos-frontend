@@ -9,6 +9,14 @@ import theme from '../services/material-ui'
 
 import '../styles/globals.css'
 
+function SafeHydrate ({ children }) {
+  return (
+    <div suppressHydrationWarning>
+      {typeof window === 'undefined' ? null : children}
+    </div>
+  )
+}
+
 function MyApp ({ Component, pageProps }) {
   const Layout = Component.layout || Default
   useEffect(() => {
@@ -28,7 +36,9 @@ function MyApp ({ Component, pageProps }) {
             content="minimum-scale=1, initial-scale=1, width=device-width"
           />
         </Head>
-        <Component {...pageProps} />
+        <SafeHydrate>
+          <Component {...pageProps} />
+        </SafeHydrate>
       </Layout>
     </ThemeProvider>
   )
