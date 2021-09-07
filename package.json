@@ -1,26 +1,18 @@
 {
   "private": true,
-  "productName": "ElectronNext",
-  "main": "main/index.js",
+  "productName": "database-frontend",
   "scripts": {
     "clean": "rimraf dist renderer/.next renderer/out",
-    "dev": "electron .",
-    "build": "next build renderer && next export renderer",
-    "pack-app": "npm run build && electron-builder --dir",
-    "dist": "npm run build && electron-builder",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
   "build": {
-    "asar": true,
-    "files": [
-      "main",
-      "renderer/out"
-    ]
+    "asar": true
   },
   "devDependencies": {
-    "electron": "^12.0.2",
-    "electron-builder": "^22.10.5",
     "eslint": "^7.23.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
@@ -36,10 +28,6 @@
     "@hookform/resolvers": "^2.6.1",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
-    "axios": "^0.21.1",
-    "electron-fetch": "^1.7.4",
-    "electron-is-dev": "^1.1.0",
-    "electron-next": "^3.1.5",
     "react-hook-form": "^7.12.1",
     "yup": "^0.32.9"
   },

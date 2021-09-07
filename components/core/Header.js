@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Header = (props) => {
-  const { title, link = '', back = '' } = props
+  const { title, link = '', back = '', action } = props
 
   const classes = useStyles()
   const router = useRouter()
@@ -43,7 +43,7 @@ const Header = (props) => {
       {
         link.length > 0 &&
         <Button variant="contained" color="primary" onClick={() => router.push(link)}>
-          Nuevo Cliente
+          {action}
         </Button>
       }
     </Paper>

@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/dist/client/router'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import eleFetch from 'electron-fetch'
 
 import Card from 'components/core/Card'
 import Input from 'components/controls/Input'
@@ -28,7 +27,7 @@ const New = () => {
   const onSubmit = async (data) => {
     console.log(data)
     try {
-      await eleFetch('http://localhost:8080/api/users')
+      await fetch('http://localhost:8081/app/customers/')
         .then(response => response.json())
         .then(data => console.log(data))
     } catch (e) {
