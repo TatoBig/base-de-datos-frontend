@@ -35,5 +35,5 @@
     "*.js": "eslint --cache --fix"
   },
   "license": "MIT",
-  "engines": { "node" : ">=0.12" }
+  "engines": { "node" : "= 14.17.0" }
 }
