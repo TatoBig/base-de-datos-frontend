@@ -7,7 +7,9 @@ const Form = (props) => {
   const {
     children,
     handleSubmit,
-    onSubmit, onCancel
+    onSubmit,
+    onCancel,
+    disableButton
   } = props
 
   return (
@@ -15,7 +17,7 @@ const Form = (props) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         {children}
         <Box display="flex" flexDirection="row-reverse">
-          <Button style={{ marginLeft: 16 }} type="submit" variant="contained" color="primary">
+          <Button style={{ marginLeft: 16 }} type="submit" variant="contained" color="primary" disabled={disableButton}>
             Guardar
           </Button>
           <Button onClick={onCancel} variant="contained" color="secondary">

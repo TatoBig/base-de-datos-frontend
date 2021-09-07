@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/dist/client/router'
@@ -8,6 +8,7 @@ import * as yup from 'yup'
 import Card from 'components/core/Card'
 import Input from 'components/controls/Input'
 import Form from 'components/core/Form'
+import useCustomers from 'hooks/useCustomers'
 
 const schema = yup.object().shape({
   firstName: yup.string().required('Debe ingresar un nombre'),
@@ -24,21 +25,24 @@ const New = () => {
     resolver: yupResolver(schema)
   })
 
+  const { newCustomer } = useCustomers()
+
+  const [disabledButton, setDisabledButton] = useState(false)
+
   const onSubmit = async (data) => {
+    setDisabledButton(true)
     console.log(data)
-    try {
-      await fetch('http://localhost:8081/app/customers/')
-        .then(response => response.json())
-        .then(data => console.log(data))
-    } catch (e) {
-      console.log(e)
+    const response = await newCustomer(data)
+    if (response === 'success') {
+      router.push('/customers')
     }
+    setDisabledButton(false)
   }
 
   return (
     <Fragment>
       <Card title="Título">
-        <Form handleSubmit={handleSubmit} onSubmit={onSubmit} onCancel={() => router.push('/customers')}>
+        <Form handleSubmit={handleSubmit} onSubmit={onSubmit} onCancel={() => router.push('/customers')} disableButton={disabledButton}>
           <Input
             error={errors.firstName}
             control={control}
