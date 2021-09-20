@@ -23,10 +23,16 @@ export const paletteSlice = createSlice({
       state.secondaryColor = secondaryColor
       state.primaryColor = primaryColor
       state.type = type
+    },
+    setTheme: (state, action) => {
+      const {
+        theme
+      } = action.payload
+      state.type = theme
     }
   }
 })
 
-export const { setPrimaryColor, setPalette } = paletteSlice.actions
+export const { setPrimaryColor, setPalette, setTheme } = paletteSlice.actions
 
 export default paletteSlice.reducer

@@ -9,6 +9,7 @@ import { useRouter } from 'next/dist/client/router'
 import Input from 'components/controls/Input'
 import { Button, Typography } from '@material-ui/core'
 import { setPrimaryColor } from 'store/palette'
+import Head from 'next/head'
 
 // const useStyles = makeStyles({
 //   // test: {
@@ -45,6 +46,9 @@ const Home = () => {
 
   return (
     <Fragment>
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Typography variant="h1">Electron</Typography>
       <Typography variant="h5">{message}</Typography>
 

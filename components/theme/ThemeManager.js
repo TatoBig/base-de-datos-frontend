@@ -1,16 +1,17 @@
 import { Fragment } from 'react'
 
-import { makeStyles } from '@material-ui/core'
+import { makeStyles, FormControl, FormControlLabel, Radio, Typography } from '@material-ui/core'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/dist/client/router'
 import { useSelector, useDispatch } from 'react-redux'
 import LensIcon from '@material-ui/icons/Lens'
 import List from '@material-ui/core/List'
 
+import { RadioGroup } from 'components/controls/RadioGroup'
+import { setPrimaryColor, setTheme } from 'store/palette'
 import Card from 'components/core/Card'
 import Form from 'components/core/Form'
 import ListItemDialog from 'components/core/ListItemDialog'
-import { setPrimaryColor } from 'store/palette'
 
 const colors = [
   '#000000', '#404040', '#808080', '#FF0000', '#FF6A00', '#FFD800',
@@ -39,8 +40,11 @@ const useStyles = makeStyles(theme => ({
 const ThemeManager = () => {
   const classes = useStyles()
   const router = useRouter()
-  const { handleSubmit, setValue } = useForm({
-    mode: 'onChange'
+  const { handleSubmit, setValue, control } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      theme: 'light'
+    }
   })
 
   const {
@@ -52,6 +56,9 @@ const ThemeManager = () => {
     console.log(data)
     dispatch(setPrimaryColor({
       primaryColor: data.primary
+    }))
+    dispatch(setTheme({
+      theme: data.theme
     }))
   }
 
@@ -71,6 +78,16 @@ const ThemeManager = () => {
               options={colors.map(color => matchColor(color, 'large'))}
             />
           </List>
+          <Typography variant="h5">Tema</Typography>
+          <FormControl component="fieldset">
+            <RadioGroup
+              control={control}
+              name="theme"
+            >
+              <FormControlLabel value="light" control={<Radio />} label="Tema claro ☀️" />
+              <FormControlLabel value="dark" control={<Radio />} label="Tema oscuro 🌑" />
+            </RadioGroup>
+          </FormControl>
         </Form>
       </Card>
     </Fragment>

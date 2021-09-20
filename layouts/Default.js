@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core'
 import { Fragment, useEffect, useState } from 'react'
 import Drawer from 'layouts/components/Drawer'
 import styles from './Layout.module.css'
+import Head from 'next/head'
 
 const drawerWidth = 260
 
@@ -42,6 +43,9 @@ const Default = ({ children }) => {
 
   return (
     <Fragment>
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <div className={classes.root}>
         <Drawer />
         <main className={classes.content}>
