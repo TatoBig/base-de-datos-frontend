@@ -9,7 +9,7 @@ const Form = (props) => {
     handleSubmit,
     onSubmit,
     onCancel,
-    disableButton
+    disableButton = false
   } = props
 
   return (

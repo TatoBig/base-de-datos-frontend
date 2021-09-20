@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    backgroundColor: theme.palette.paper.background,
     padding: theme.spacing(2),
     marginBottom: theme.spacing(2),
     display: 'flex',

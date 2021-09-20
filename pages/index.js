@@ -3,10 +3,12 @@ import { Fragment, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { useDispatch } from 'react-redux'
 
 import { useRouter } from 'next/dist/client/router'
 import Input from 'components/controls/Input'
 import { Button, Typography } from '@material-ui/core'
+import { setPrimaryColor } from 'store/palette'
 
 // const useStyles = makeStyles({
 //   // test: {
@@ -20,6 +22,8 @@ const schema = yup.object().shape({
 
 const Home = () => {
   const router = useRouter()
+  const dispatch = useDispatch()
+
   // const classes = useStyles()
   const { handleSubmit, control, formState: { errors } } = useForm({
     mode: 'onChange',
@@ -31,6 +35,12 @@ const Home = () => {
 
   const onSubmit = (data) => {
     setMessage(data.test)
+  }
+
+  const changePrimaryColor = () => {
+    dispatch(setPrimaryColor({
+      primaryColor: '#000000'
+    }))
   }
 
   return (
@@ -71,6 +81,9 @@ const Home = () => {
       </form>
       <Button variant="text" color="default" onClick={() => router.push('/test')}>
         Button test
+      </Button>
+      <Button color="primary" variant="contained" onClick={() => changePrimaryColor()}>
+        Cambiar color
       </Button>
     </Fragment>
   )

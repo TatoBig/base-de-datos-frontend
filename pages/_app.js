@@ -1,13 +1,14 @@
 import { useEffect } from 'react'
 
-import { ThemeProvider } from '@material-ui/styles'
 import { CssBaseline } from '@material-ui/core'
+import { Provider } from 'react-redux'
 
-import Default from '../layouts/Default'
+import Default from 'layouts/Default'
 import Head from 'next/head'
-import theme from '../services/material-ui'
 
-import '../styles/globals.css'
+import 'styles/globals.css'
+import store from 'store'
+import CustomThemeProvider from 'services/CustomThemeProvider'
 
 function SafeHydrate ({ children }) {
   return (
@@ -27,20 +28,22 @@ function MyApp ({ Component, pageProps }) {
   }, [])
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Layout>
-        <Head>
-          <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width"
-          />
-        </Head>
-        <SafeHydrate>
-          <Component {...pageProps} />
-        </SafeHydrate>
-      </Layout>
-    </ThemeProvider>
+    <Provider store={store}>
+      <CustomThemeProvider>
+        <CssBaseline />
+        <Layout>
+          <Head>
+            <meta
+              name="viewport"
+              content="minimum-scale=1, initial-scale=1, width=device-width"
+            />
+          </Head>
+          <SafeHydrate>
+            <Component {...pageProps} />
+          </SafeHydrate>
+        </Layout>
+      </CustomThemeProvider>
+    </Provider>
   )
 }
 

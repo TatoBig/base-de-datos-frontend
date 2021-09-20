@@ -14,6 +14,8 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 
 import DrawerList from 'layouts/components/DrawerList'
+import { Button } from '@material-ui/core'
+import { useRouter } from 'next/dist/client/router'
 
 const drawerWidth = 240
 
@@ -52,8 +54,7 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
-    }),
-    backgroundColor: theme.palette.drawer.background
+    })
   },
   drawerClose: {
     transition: theme.transitions.create('width', {
@@ -64,13 +65,11 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(7) + 1,
     [theme.breakpoints.up('sm')]: {
       width: theme.spacing(9) + 1
-    },
-    backgroundColor: theme.palette.drawer.background
+    }
   },
   toolbar: {
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: theme.palette.drawer.toolbar,
     justifyContent: 'flex-end',
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
@@ -85,6 +84,8 @@ const useStyles = makeStyles((theme) => ({
 export default function MiniDrawer () {
   const classes = useStyles()
   const theme = useTheme()
+  const router = useRouter()
+
   const [open, setOpen] = useState(false)
 
   const handleDrawerOpen = () => {
@@ -116,9 +117,12 @@ export default function MiniDrawer () {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap color="inherit">
-            Mini variant drawer
+          <Typography style={{ flexGrow: 1 }} variant="h6" noWrap>
+            Proyecto de Base de Datos 2
           </Typography>
+          <Button color="inherit" onClick={() => router.push('/theme')}>
+            Cambiar tema de colores
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -141,23 +145,6 @@ export default function MiniDrawer () {
         </div>
         <Divider />
         <DrawerList />
-        {/* <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon color="primary" />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List> */}
       </Drawer>
     </Fragment>
   )

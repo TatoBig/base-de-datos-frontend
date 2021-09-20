@@ -33,6 +33,7 @@ const useStyles = makeStyles({
     minWidth: 700
   }
 })
+
 export default function CustomizedTables (props) {
   const { headers = [], rows = [], options = [] } = props
 

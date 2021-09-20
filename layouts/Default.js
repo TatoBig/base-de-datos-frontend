@@ -1,8 +1,7 @@
-import { Grid, makeStyles, Snackbar, Typography } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core'
 import { Fragment, useEffect, useState } from 'react'
 import Drawer from 'layouts/components/Drawer'
 import styles from './Layout.module.css'
-// import Navbar from 'layouts/components/Navbar'
 
 const drawerWidth = 260
 
@@ -19,13 +18,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'flex-end',
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
-    backgroundColor: theme.palette.background.night
+    padding: theme.spacing(3)
   }
 }))
 
@@ -62,14 +59,6 @@ const Default = ({ children }) => {
             {displayChildren}
           </div>
         </main>
-        {/* <main className={classes.content}>
-        <Grid container>
-          <Grid item xs={12}>
-            {children}
-          </Grid>
-        </Grid>
-        <Snackbar />
-      </main> */}
       </div>
     </Fragment>
   )

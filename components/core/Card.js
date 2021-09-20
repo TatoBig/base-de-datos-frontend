@@ -2,12 +2,8 @@ import { makeStyles, Typography } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
 
 const useStyles = makeStyles((theme) => ({
-  icon: {
-    color: theme.palette.fontColor.main
-  },
   paper: {
-    backgroundColor: theme.palette.paper.background,
-    width: 850,
+    minWidth: 650,
     height: '100%',
     padding: theme.spacing(2)
   },

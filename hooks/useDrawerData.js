@@ -8,9 +8,7 @@ import ListAltOutlinedIcon from '@material-ui/icons/ListAltOutlined'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 
 const useStyles = makeStyles((theme) => ({
-  icon: {
-    color: theme.palette.fontColor.main
-  }
+
 }))
 
 const useDrawerData = () => {
