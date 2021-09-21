@@ -1,16 +1,13 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 
 import { makeStyles, FormControl, FormControlLabel, Radio, Typography } from '@material-ui/core'
-import { useForm } from 'react-hook-form'
-import { useRouter } from 'next/dist/client/router'
+import { useForm, useWatch } from 'react-hook-form'
 import { useSelector, useDispatch } from 'react-redux'
 import LensIcon from '@material-ui/icons/Lens'
 import List from '@material-ui/core/List'
 
 import { RadioGroup } from 'components/controls/RadioGroup'
 import { setPrimaryColor, setTheme } from 'store/palette'
-import Card from 'components/core/Card'
-import Form from 'components/core/Form'
 import ListItemDialog from 'components/core/ListItemDialog'
 
 const colors = [
@@ -39,57 +36,85 @@ const useStyles = makeStyles(theme => ({
 
 const ThemeManager = () => {
   const classes = useStyles()
-  const router = useRouter()
-  const { handleSubmit, setValue, control } = useForm({
-    mode: 'onChange',
-    defaultValues: {
-      theme: 'light'
-    }
-  })
 
   const {
-    primaryColor
+    primaryColor,
+    type
   } = useSelector(state => state.palette)
   const dispatch = useDispatch()
 
-  const onSubmit = (data) => {
-    console.log(data)
+  const { setValue, control } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      theme: type,
+      primary: primaryColor
+    }
+  })
+
+  // // const onSubmit = (data) => {
+  // //   console.log(data)
+  //   dispatch(setPrimaryColor({
+  //     primaryColor: data.primary
+  //   }))
+  // //   dispatch(setTheme({
+  // //     theme: data.theme
+  // //   }))
+  // // }
+
+  const primary = useWatch({
+    control,
+    name: 'primary'
+  })
+
+  useEffect(() => {
+    console.log(primary)
     dispatch(setPrimaryColor({
-      primaryColor: data.primary
+      primaryColor: primary
     }))
+  }, [primary])
+
+  const handleOnChangeTheme = (theme) => {
+    console.log(theme)
     dispatch(setTheme({
-      theme: data.theme
+      theme: theme
     }))
   }
 
+  // useEffect(() => {
+  //   console.log(watch('primary'))
+  // }, [])
+
+  // const primary = useWatch({ name: 'primary' })
+
+  // useEffect(() => {
+  //   console.log(primary)
+  // }, [primary])
+
   return (
     <Fragment>
-      <Card title="Modificar tema">
-        <Form handleSubmit={handleSubmit} onSubmit={onSubmit} onCancel={() => router.push('/')} >
-          <List
-            className={classes.list}
-          >
-            <ListItemDialog
-              name="primary"
-              setValue={setValue}
-              title="Color primario, tema principal, botones..."
-              transform={matchColor}
-              defaultSelected={matchColor(primaryColor, 'medium')}
-              options={colors.map(color => matchColor(color, 'large'))}
-            />
-          </List>
-          <Typography variant="h5">Tema</Typography>
-          <FormControl component="fieldset">
-            <RadioGroup
-              control={control}
-              name="theme"
-            >
-              <FormControlLabel value="light" control={<Radio />} label="Tema claro ☀️" />
-              <FormControlLabel value="dark" control={<Radio />} label="Tema oscuro 🌑" />
-            </RadioGroup>
-          </FormControl>
-        </Form>
-      </Card>
+      <List
+        className={classes.list}
+      >
+        <ListItemDialog
+          name="primary"
+          setValue={setValue}
+          title="Color primario, tema principal, botones..."
+          transform={matchColor}
+          defaultSelected={matchColor(primaryColor, 'medium')}
+          options={colors.map(color => matchColor(color, 'large'))}
+        />
+      </List>
+      <Typography variant="h5">Tema</Typography>
+      <FormControl component="fieldset">
+        <RadioGroup
+          control={control}
+          name="theme"
+          callback={(e => handleOnChangeTheme(e))}
+        >
+          <FormControlLabel value="light" control={<Radio />} label="Tema claro ☀️" />
+          <FormControlLabel value="dark" control={<Radio />} label="Tema oscuro 🌑" />
+        </RadioGroup>
+      </FormControl>
     </Fragment>
   )
 }

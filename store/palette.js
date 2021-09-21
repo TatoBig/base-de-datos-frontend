@@ -5,7 +5,7 @@ export const paletteSlice = createSlice({
   initialState: {
     secondaryColor: '#ED4245',
     primaryColor: '#FFE459',
-    type: 'light'
+    type: 'dark'
   },
   reducers: {
     setPrimaryColor: (state, action) => {

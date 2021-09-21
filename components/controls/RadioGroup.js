@@ -5,7 +5,8 @@ export const RadioGroup = (props) => {
   const {
     children,
     control,
-    name
+    name,
+    callback
   } = props
   return (
     <Controller
@@ -21,6 +22,9 @@ export const RadioGroup = (props) => {
             onBlur={onBlur}
             onChange={(e) => {
               onChange(e)
+              if (callback) {
+                callback(e.target.value)
+              }
             }}
           >
             {children}

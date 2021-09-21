@@ -55,7 +55,6 @@ const ListItemDialog = (props) => {
   useEffect(() => {
     if (defaultSelected) {
       setSelected(defaultSelected)
-      setValue(name, defaultSelected.value)
     }
   }, [defaultSelected])
 

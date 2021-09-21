@@ -1,6 +1,10 @@
 import { Fragment, useState } from 'react'
 
+import { Button } from '@material-ui/core'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { setPrimaryColor, setTheme } from 'store/palette'
+import { useForm } from 'react-hook-form'
+import { useSelector, useDispatch } from 'react-redux'
 import AppBar from '@material-ui/core/AppBar'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
@@ -14,8 +18,8 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 
 import DrawerList from 'layouts/components/DrawerList'
-import { Button } from '@material-ui/core'
-import { useRouter } from 'next/dist/client/router'
+import Dialog from 'components/core/Dialog'
+import ThemeManager from 'components/theme/ThemeManager'
 
 const drawerWidth = 240
 
@@ -84,9 +88,9 @@ const useStyles = makeStyles((theme) => ({
 export default function MiniDrawer () {
   const classes = useStyles()
   const theme = useTheme()
-  const router = useRouter()
 
   const [open, setOpen] = useState(false)
+  const [openTheme, setOpenTheme] = useState(false)
 
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -120,7 +124,7 @@ export default function MiniDrawer () {
           <Typography style={{ flexGrow: 1 }} variant="h6" noWrap>
             Proyecto de Base de Datos 2
           </Typography>
-          <Button color="inherit" onClick={() => router.push('/theme')}>
+          <Button color="inherit" onClick={() => setOpenTheme(true)}>
             Cambiar tema de colores
           </Button>
         </Toolbar>
@@ -146,6 +150,14 @@ export default function MiniDrawer () {
         <Divider />
         <DrawerList />
       </Drawer>
+      <Dialog
+        open={openTheme}
+        onSubmit={() => setOpenTheme(false)}
+        onClose={() => setOpenTheme(false)}
+        cancel={false}
+      >
+        <ThemeManager />
+      </Dialog>
     </Fragment>
   )
 }

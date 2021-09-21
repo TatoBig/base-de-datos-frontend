@@ -10,12 +10,15 @@ const Dialog = (props) => {
     onSubmit,
     onClose,
     children,
-    title
+    title,
+    actions = true,
+    cancel = true
   } = props
   return (
     <MuiDialog
       maxWidth="xs"
       open={open}
+      onClose={onClose}
     // className={classes.dialog}
     >
       <DialogTitle>{title}</DialogTitle>
@@ -23,14 +26,20 @@ const Dialog = (props) => {
       <DialogContent dividers >
         {children}
       </DialogContent>
-      <DialogActions>
-        <Button variant="contained" onClick={() => onSubmit()} color="secondary">
-          Cancel
-        </Button>
-        <Button variant="contained" onClick={() => onClose()} color="primary">
-          Ok
-        </Button>
-      </DialogActions>
+      {
+        actions &&
+        <DialogActions>
+          {
+            cancel &&
+            <Button variant="contained" onClick={() => onClose()} color="secondary">
+              Cancel
+            </Button>
+          }
+          <Button variant="contained" onClick={() => onSubmit()} color="primary">
+            Aceptar
+          </Button>
+        </DialogActions>
+      }
     </MuiDialog>
   )
 }

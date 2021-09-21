@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography'
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.table.head,
-    color: theme.palette.common.black
+    color: theme.palette.text.auto
   },
   body: {
     fontSize: 16
