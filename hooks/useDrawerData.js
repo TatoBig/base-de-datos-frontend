@@ -6,6 +6,8 @@ import DraftsIcon from '@material-ui/icons/Drafts'
 import HomeIcon from '@material-ui/icons/Home'
 import ListAltOutlinedIcon from '@material-ui/icons/ListAltOutlined'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
+import LocalShippingIcon from '@material-ui/icons/LocalShipping'
+import LocalMallIcon from '@material-ui/icons/LocalMall'
 
 const useStyles = makeStyles((theme) => ({
 
@@ -38,6 +40,14 @@ const useDrawerData = () => {
     Productos: {
       icon: <DraftsIcon className={classes.icon} />,
       redirect: () => router.push('/products')
+    },
+    Proveedores: {
+      icon: <LocalShippingIcon className={classes.icon} />,
+      redirect: () => router.push('/providers')
+    },
+    Compras: {
+      icon: <LocalMallIcon className={classes.icon} />,
+      redirect: () => router.push('/purchases')
     }
   }
 }
