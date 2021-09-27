@@ -30,7 +30,7 @@ const List = () => {
             id: row.codigoProducto,
             nombreProducto: row.nombreProducto,
             cantidad: row.cantidad,
-            precio: row.precio
+            precio: `Q ${row.precio}.00`
           }
         })}
       />

@@ -13,7 +13,8 @@ import PhoneInputs from 'components/customers/PhoneInputs'
 import Select from 'components/controls/Select'
 
 const schema = yup.object().shape({
-  nombres: yup.string().required('Debe ingresar un nombre')
+  nombres: yup.string().required('Debe ingresar un nombre'),
+  customerType: yup.string().required('Debe asignar un tipo de cliente')
 })
 
 const New = () => {

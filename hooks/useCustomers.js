@@ -32,13 +32,29 @@ const useCustomers = () => {
   const newCustomer = async (data) => {
     let response
     try {
+      const allowedInput = []
+      for (let i = 0; i < Object.keys(data).length - 1; i++) {
+        allowedInput.push(`phone${i}`)
+      }
+      const phones = Object.keys(Object.keys(data)
+        .filter(key => allowedInput.includes(key))
+        .reduce((obj, key) => {
+          obj[key] = data[key]
+          return obj
+        }, {}))
+        .map(key => data[key])
       await fetch(`${_url}/customers/`, postOptions({
         cliente: {
           nombre: data.nombres,
           apellidos: data.apellidos,
           correo: data.correo,
           direccion: data.direccion,
-          detalleCliente_id: data.customerType
+          detalleCliente_id: data.customerType,
+          telefonos: phones.map(phone => {
+            return {
+              telefono: phone
+            }
+          })
         }
       }))
         .then(response => response.json())

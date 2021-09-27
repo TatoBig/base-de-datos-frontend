@@ -55,6 +55,21 @@ const useSales = () => {
     })
 
     console.log(username)
+    console.log(JSON.stringify({
+      venta: {
+        usuarioId: username,
+        total: total,
+        yapagado: true,
+        clienteId: parseInt(data.clienteId),
+        detalle_venta: Object.keys(products).map((key, index) => {
+          return {
+            cantidad: quantities[index],
+            precio: products[key].precio,
+            productoId: products[key].codigoProducto
+          }
+        })
+      }
+    }))
 
     try {
       await fetch(`${_url}/ventas/`, postOptions({

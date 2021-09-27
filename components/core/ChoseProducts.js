@@ -4,7 +4,7 @@ import AddIcon from '@material-ui/icons/Add'
 import Input from 'components/controls/Input'
 import Select from 'components/controls/Select'
 
-const PhoneInputs = (props) => {
+const ChoseProducts = (props) => {
   const {
     control,
     products: productOptions
@@ -49,4 +49,4 @@ const PhoneInputs = (props) => {
   )
 }
 
-export default PhoneInputs
+export default ChoseProducts

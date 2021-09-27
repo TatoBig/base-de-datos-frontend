@@ -3,6 +3,7 @@ import { Fragment, useEffect } from 'react'
 import useCustomers from 'hooks/useCustomers'
 
 import Table from 'components/core/Table'
+import { Button, Tooltip, Typography } from '@material-ui/core'
 
 const List = () => {
   const { getCustomers, customers } = useCustomers()
@@ -12,7 +13,8 @@ const List = () => {
     { id: 'name', name: 'Nombre' },
     { id: 'address', name: 'Direccion' },
     { id: 'correo', name: 'Correo' },
-    { id: 'type', name: 'Tipo de Cliente' }
+    { id: 'type', name: 'Tipo de Cliente' },
+    { id: 'phones', name: 'Teléfonos' }
   ]
 
   useEffect(() => {
@@ -33,7 +35,18 @@ const List = () => {
             name: `${row.nombre} ${row.apellidos || ''}`,
             address: row.direccion || '',
             correo: row.correo || '',
-            type: row.detalleCliente.nombre
+            type: row.detalleCliente.nombre,
+            phones:
+            <Tooltip title={
+              row.telefonoList?.map((phone, index) => (
+                <Fragment key={index}>
+                  <Typography variant="subtitle2" align="center">Telefono: {phone?.numero}</Typography>
+                  <Typography variant="subtitle2" align="center">--------------------------</Typography>
+                </Fragment>
+              ))
+            } interactive>
+              <Button>{row.telefonoList?.length}</Button>
+            </Tooltip>
           }
         })}
       />

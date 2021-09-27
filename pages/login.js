@@ -7,10 +7,12 @@ import Input from 'components/controls/Input'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import useLogin from 'hooks/useLogin'
 import { useRouter } from 'next/dist/client/router'
 import { useDispatch } from 'react-redux'
 import { login } from 'store/login'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+// eslint-disable-next-line no-unused-vars
+import firebase from 'services/Firebase'
 
 const schema = yup.object().shape({
   username: yup.string().required('Debe ingresar un nombre'),
@@ -23,25 +25,26 @@ const loginPage = () => {
     resolver: yupResolver(schema)
   })
 
-  const {
-    login: tryLogin
-  } = useLogin()
   const router = useRouter()
   const dispatch = useDispatch()
 
   const [disabledButton, setDisabledButton] = useState(false)
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     setDisabledButton(true)
-    const { response, username } = await tryLogin(data)
-    if (response === 'success') {
-      console.log(username)
-      dispatch(login({
-        status: true,
-        username: username
-      }))
-      router.push('/')
-    }
+    const auth = getAuth()
+    signInWithEmailAndPassword(auth, data.username, data.password)
+      .then((userCredential) => {
+        dispatch(login({
+          status: true,
+          username: userCredential?.user?.email
+        }))
+        router.push('/')
+      })
+      .catch((error) => {
+        console.log(error.code)
+        console.log(error.message)
+      })
     setDisabledButton(false)
   }
 
