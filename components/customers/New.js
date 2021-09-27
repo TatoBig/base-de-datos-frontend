@@ -13,9 +13,7 @@ import PhoneInputs from 'components/customers/PhoneInputs'
 import Select from 'components/controls/Select'
 
 const schema = yup.object().shape({
-  firstName: yup.string().required('Debe ingresar un nombre'),
-  lastName: yup.string().required('Debe ingresar un apellido'),
-  customerType: yup.string().required('Es necesario asignar un tipo de cliente')
+  nombres: yup.string().required('Debe ingresar un nombre')
 })
 
 const New = () => {
@@ -55,23 +53,29 @@ const New = () => {
     <Fragment>
       <Card title="Título">
         <Form handleSubmit={handleSubmit} onSubmit={onSubmit} onCancel={() => router.push('/customers')} disableButton={disabledButton}>
-          <Input
-            error={errors.firstName}
+        <Input
+            error={errors.nombres}
             control={control}
             label="Nombre"
-            name="firstName"
+            name="nombres"
           />
           <Input
-            error={errors.lastName}
+            error={errors.apellidos}
             control={control}
             label="Apellido"
-            name="lastName"
+            name="apellidos"
           />
           <Input
-            error={errors.nit}
+            error={errors.direccion}
             control={control}
-            label="NIT"
-            name="nit"
+            label="Dirección"
+            name="direccion"
+          />
+          <Input
+            error={errors.correo}
+            control={control}
+            label="Correo"
+            name="correo"
           />
           <Select
             control={control}

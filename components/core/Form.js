@@ -20,9 +20,12 @@ const Form = (props) => {
           <Button style={{ marginLeft: 16 }} type="submit" variant="contained" color="primary" disabled={disableButton}>
             Guardar
           </Button>
-          <Button onClick={onCancel} variant="contained" color="secondary">
-            Cancelar
-          </Button>
+          {
+            onCancel &&
+            <Button onClick={onCancel} variant="contained" color="secondary">
+              Cancelar
+            </Button>
+          }
         </Box>
       </form>
     </Fragment>

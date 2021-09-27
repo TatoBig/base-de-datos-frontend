@@ -3,6 +3,8 @@ import { Fragment, useEffect, useState } from 'react'
 import Drawer from 'layouts/components/Drawer'
 import styles from './Layout.module.css'
 import Head from 'next/head'
+import { useSelector } from 'react-redux'
+import { useRouter } from 'next/dist/client/router'
 
 const drawerWidth = 260
 
@@ -29,13 +31,25 @@ const useStyles = makeStyles((theme) => ({
 
 const Default = ({ children }) => {
   const classes = useStyles()
+  const router = useRouter()
 
   const [displayChildren, setDisplayChildren] = useState(children)
   const [transitionStage, setTransitionStage] = useState('fadeOut')
 
+  const {
+    logged
+  } = useSelector(state => state.login)
+
   useEffect(() => {
     setTransitionStage('fadeIn')
   }, [])
+
+  useEffect(() => {
+    console.log(logged)
+    if (!logged) {
+      router.push('/login')
+    }
+  }, [logged])
 
   useEffect(() => {
     if (children !== displayChildren) setTransitionStage('fadeOut')
@@ -53,14 +67,18 @@ const Default = ({ children }) => {
           <div
             onTransitionEnd={() => {
               if (transitionStage === 'fadeOut') {
-                console.log('fading out')
                 setDisplayChildren(children)
                 setTransitionStage('fadeIn')
               }
             }}
             className={`${styles.content} ${styles[transitionStage]}`}
           >
-            {displayChildren}
+            {
+              logged &&
+              <div>
+                {displayChildren}
+              </div>
+            }
           </div>
         </main>
       </div>

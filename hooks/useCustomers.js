@@ -34,8 +34,10 @@ const useCustomers = () => {
     try {
       await fetch(`${_url}/customers/`, postOptions({
         cliente: {
-          nombre: data.firstName,
-          apellidos: data.lastName,
+          nombre: data.nombres,
+          apellidos: data.apellidos,
+          correo: data.correo,
+          direccion: data.direccion,
           detalleCliente_id: data.customerType
         }
       }))

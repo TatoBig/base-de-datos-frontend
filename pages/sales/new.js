@@ -1,21 +1,21 @@
 import { Fragment } from 'react'
 
 import Header from 'components/core/Header'
-import UserNew from 'components/inventory/New'
+import SalesNew from 'components/sales/New'
 import Box from '@material-ui/core/Box'
 
-const newInventory = () => {
+const newSale = () => {
   return (
     <Fragment>
       <Header
-        title="Nuevo inventario"
-        back="/inventory"
+        title="Nueva venta"
+        back="/sales"
       />
       <Box display="flex" justifyContent="center">
-        <UserNew />
+        <SalesNew />
       </Box>
     </Fragment>
   )
 }
 
-export default newInventory
+export default newSale
