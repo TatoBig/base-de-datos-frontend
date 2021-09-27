@@ -1,4 +1,4 @@
-export const _url = 'https://proyectobddos.herokuapp.com/app/'
+export const _url = 'https://proyectobddos.herokuapp.com/app'
 
 export const postOptions = (body) => {
   return {
