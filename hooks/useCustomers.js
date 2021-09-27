@@ -1,15 +1,29 @@
 import { useState } from 'react'
-
-const url = 'http://localhost:8081/app/customers/'
+import { postOptions, _url } from 'services/Connection'
 
 const useCustomers = () => {
   const [customers, setCustomers] = useState([])
+  const [customerTypes, setCustomerTypes] = useState([])
 
   const getCustomers = async () => {
     try {
-      await fetch(url)
+      await fetch(`${_url}/customers/`)
         .then(response => response.json())
-        .then(data => setCustomers(data))
+        .then(data => {
+          if (!data.error) {
+            setCustomers(data)
+          }
+        })
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const getCustomerTypes = async () => {
+    try {
+      await fetch(`${_url}/customers/type/`)
+        .then(response => response.json())
+        .then(data => setCustomerTypes(data))
     } catch (e) {
       console.log(e)
     }
@@ -18,17 +32,34 @@ const useCustomers = () => {
   const newCustomer = async (data) => {
     let response
     try {
-      const requestOptions = {
-        method: 'POST',
-        body: JSON.stringify({
-          firstName: data.firstName,
-          lastName: data.lastName,
-          nit: data.nit,
-          createdAt: '2020-10-10'
-        }),
-        headers: { 'Content-Type': 'application/json' }
-      }
-      await fetch(url, requestOptions)
+      await fetch(`${_url}/customers/`, postOptions({
+        cliente: {
+          nombre: data.firstName,
+          apellidos: data.lastName,
+          detalleCliente_id: data.customerType
+        }
+      }))
+        .then(response => response.json())
+        .then(result => {
+          console.log(result)
+          response = 'success'
+        })
+    } catch (e) {
+      console.log(e)
+      response = 'error'
+    }
+    return response
+  }
+
+  const newCustomerType = async (data) => {
+    let response
+    try {
+      await fetch(`${_url}/customers/type/`, postOptions({
+        detalle_cliente: {
+          nombre: data.name,
+          descuento: data.discount
+        }
+      }))
         .then(response => response.json())
         .then(result => {
           console.log(result)
@@ -44,7 +75,10 @@ const useCustomers = () => {
   return {
     getCustomers,
     newCustomer,
-    customers
+    customers,
+    newCustomerType,
+    getCustomerTypes,
+    customerTypes
   }
 }
 

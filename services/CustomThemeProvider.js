@@ -5,11 +5,7 @@ import { ThemeProvider } from '@material-ui/styles'
 
 const getAutoText = (color) => {
   const { red, green, blue } = hexToRgb(color)
-  console.log(red)
-  console.log(green)
-  console.log(blue)
   const a = 1 - (0.299 * red + 0.587 * green + 0.114 * blue) / 255
-  console.log(a)
   if (a < 0.5) {
     return '#000000'
   } else {
@@ -38,7 +34,6 @@ const CustomThemeProvider = ({ children }) => {
   const [autoColor, setAutoColor] = useState('#000000')
 
   useEffect(() => {
-    console.log(getAutoText(primaryColor))
     setAutoColor(getAutoText(primaryColor))
   }, [primaryColor])
 

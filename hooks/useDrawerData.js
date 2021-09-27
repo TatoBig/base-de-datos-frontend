@@ -33,6 +33,10 @@ const useDrawerData = () => {
         }
       }
     },
+    'Tipos de cliente': {
+      icon: <AccountCircleIcon className={classes.icon} />,
+      redirect: () => router.push('/customer-type')
+    },
     Ventas: {
       icon: <MonetizationOnIcon className={classes.icon} />,
       redirect: () => router.push('/sales')
