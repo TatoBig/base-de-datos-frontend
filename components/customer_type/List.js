@@ -9,12 +9,12 @@ import DeleteIcon from '@material-ui/icons/Delete'
 const List = () => {
   const router = useRouter()
 
-  const { getCustomers, customers } = useCustomers()
+  const { getCustomerTypes, customerTypes } = useCustomers()
 
   const headers = [
     { id: 'id', name: 'Código' },
     { id: 'name', name: 'Nombre' },
-    { id: 'customerType', name: 'Tipo de Cliente' }
+    { id: 'discount', name: 'Descuento', align: 'right' }
   ]
 
   const options = [
@@ -22,22 +22,22 @@ const List = () => {
   ]
 
   useEffect(() => {
-    getCustomers()
+    getCustomerTypes()
   }, [])
 
   useEffect(() => {
-    console.log(customers)
-  }, [customers])
+    console.log(customerTypes)
+  }, [customerTypes])
 
   return (
     <Fragment>
       <Table
         headers={headers}
-        rows={customers.map(row => {
+        rows={customerTypes.map(row => {
           return {
             id: row.id,
-            name: `${row.nombre} ${row.apellidos || ''}`,
-            customerType: row.detalleCliente.nombre
+            name: row.nombre,
+            discount: `Q${row.descuento}`
           }
         })}
         options={options}
