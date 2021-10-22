@@ -5,9 +5,9 @@ const useCustomers = () => {
   const [customers, setCustomers] = useState([])
   const [customerTypes, setCustomerTypes] = useState([])
 
-  const getCustomers = async () => {
+  const getCustomers = async (page = 0, size = 10) => {
     try {
-      await fetch(`${_url}/customers/`)
+      await fetch(`${_url}/customers/pageable?page=${page}&size=${size}`)
         .then(response => response.json())
         .then(data => {
           if (!data.error) {

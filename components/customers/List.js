@@ -1,12 +1,25 @@
-import { Fragment, useEffect } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 import useCustomers from 'hooks/useCustomers'
 
 import Table from 'components/core/Table'
-import { Button, Tooltip, Typography } from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/Delete'
+import { Box, Button, IconButton, makeStyles, Tooltip, Typography } from '@material-ui/core'
+import { ArrowForward } from '@material-ui/icons'
+import ArrowBack from '@material-ui/icons/ArrowBack'
+
+const useStyles = makeStyles({
+  pagination: {
+    display: 'flex',
+    flexDirection: 'row-reverse'
+  }
+})
 
 const List = () => {
   const { getCustomers, customers } = useCustomers()
+
+  const classes = useStyles()
+  const [page, setPage] = useState(0)
 
   const headers = [
     { id: 'id', name: 'Código' },
@@ -22,6 +35,10 @@ const List = () => {
   }, [])
 
   useEffect(() => {
+    getCustomers(page)
+  }, [page])
+
+  useEffect(() => {
     console.log(customers)
   }, [customers])
 
@@ -32,11 +49,24 @@ const List = () => {
         rows={customers.map(row => {
           return {
             id: row.id,
+            name: `${row.firstName} ${row.lastName || ''}`,
+            nit: row.nit
             name: `${row.nombre} ${row.apellidos || ''}`,
             address: row.direccion || '',
             correo: row.correo || '',
             type: row.detalleCliente.nombre,
             phones:
+
+              <Tooltip title={
+                row.telefonoList?.map((phone, index) => (
+                  <Fragment key={index}>
+                    <Typography variant="subtitle2" align="center">Telefono: {phone?.numero}</Typography>
+                    <Typography variant="subtitle2" align="center">--------------------------</Typography>
+                  </Fragment>
+                ))
+              } interactive>
+                <Button>{row.telefonoList?.length}</Button>
+              </Tooltip>
             <Tooltip title={
               row.telefonoList?.map((phone, index) => (
                 <Fragment key={index}>
@@ -50,6 +80,14 @@ const List = () => {
           }
         })}
       />
+      <Box className={classes.pagination}>
+        <IconButton disabled={customers.length !== 10} onClick={() => setPage(page + 1)}>
+          <ArrowForward />
+        </IconButton>
+        <IconButton disabled={page === 0} onClick={() => setPage(page - 1)}>
+          <ArrowBack />
+        </IconButton>
+      </Box>
     </Fragment>
   )
 }
