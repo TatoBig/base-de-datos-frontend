@@ -33,6 +33,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@reduxjs/toolkit": "^1.6.1",
+    "firebase": "^9.1.0",
     "react-hook-form": "^7.12.1",
     "react-redux": "^7.2.5",
     "redux": "^4.1.1",

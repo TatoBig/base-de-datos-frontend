@@ -8,11 +8,11 @@ import * as yup from 'yup'
 import Card from 'components/core/Card'
 import Input from 'components/controls/Input'
 import Form from 'components/core/Form'
+import useCustomers from 'hooks/useCustomers'
 
 const schema = yup.object().shape({
-  nameproduct: yup.string().required('Debe ingresar un nombre'),
-  amount: yup.string().required('Debe ingresar un monto'),
-  price: yup.string().required('Debe ingresar un precio')
+  name: yup.string().required('Debe ingresar un nombre'),
+  discount: yup.number().required('Debe ingresar una cantidad')
 })
 
 const New = () => {
@@ -22,35 +22,34 @@ const New = () => {
     resolver: yupResolver(schema)
   })
 
+  const { newCustomerType } = useCustomers()
+
   const [disabledButton, setDisabledButton] = useState(false)
 
   const onSubmit = async (data) => {
     setDisabledButton(true)
-    console.log(data)
+    const response = await newCustomerType(data)
+    if (response === 'success') {
+      router.push('/customer-type')
+    }
     setDisabledButton(false)
   }
 
   return (
     <Fragment>
-      <Card title="Nuevo inventario">
-        <Form handleSubmit={handleSubmit} onSubmit={onSubmit} onCancel={() => router.push('/inventory')} disableButton={disabledButton}>
+      <Card title="Título">
+        <Form handleSubmit={handleSubmit} onSubmit={onSubmit} onCancel={() => router.push('/customer-type')} disableButton={disabledButton}>
           <Input
-            error={errors.nameproduct}
+            error={errors.name}
             control={control}
-            label="NombreProducto"
-            nameproduct="nameproduct"
+            label="Nombre"
+            name="name"
           />
           <Input
-            error={errors.amount}
+            error={errors.discount}
             control={control}
-            label="Monto"
-            monto="amount"
-          />
-          <Input
-            error={errors.price}
-            control={control}
-            label="Precio"
-            price="price"
+            label="Descuento"
+            name="discount"
           />
         </Form>
       </Card>

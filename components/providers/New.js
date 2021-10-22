@@ -8,15 +8,11 @@ import * as yup from 'yup'
 import Card from 'components/core/Card'
 import Input from 'components/controls/Input'
 import Form from 'components/core/Form'
-import useCustomers from 'hooks/useCustomers'
+import useProviders from 'hooks/useProviders'
 
 const schema = yup.object().shape({
-  firstName: yup.string().required('Debe ingresar un nombre'),
-  lastName: yup.string().required('Debe ingresar un apellido'),
-  nit: yup.string().required('Debe ingresar un NIT')
+  nombres: yup.string().required('Debe ingresar un nombre')
 })
-
-// const url = 'http://localhost:8081'
 
 const New = () => {
   const router = useRouter()
@@ -25,14 +21,14 @@ const New = () => {
     resolver: yupResolver(schema)
   })
 
-  const { newCustomer } = useCustomers()
+  const { newProvider } = useProviders()
 
   const [disabledButton, setDisabledButton] = useState(false)
 
   const onSubmit = async (data) => {
     setDisabledButton(true)
     console.log(data)
-    const response = await newCustomer(data)
+    const response = await newProvider(data)
     if (response === 'success') {
       router.push('/providers')
     }
@@ -41,19 +37,31 @@ const New = () => {
 
   return (
     <Fragment>
-      <Card title="Título">
+      <Card title="Crear Proveedor">
         <Form handleSubmit={handleSubmit} onSubmit={onSubmit} onCancel={() => router.push('/providers')} disableButton={disabledButton}>
           <Input
-            error={errors.firstName}
+            error={errors.nombres}
             control={control}
             label="Nombre"
-            name="name"
+            name="nombres"
           />
           <Input
-            error={errors.nit}
+            error={errors.apellidos}
             control={control}
-            label="NIT"
-            name="nit"
+            label="Apellido"
+            name="apellidos"
+          />
+          <Input
+            error={errors.direccion}
+            control={control}
+            label="Dirección"
+            name="direccion"
+          />
+          <Input
+            error={errors.correo}
+            control={control}
+            label="Correo"
+            name="correo"
           />
         </Form>
       </Card>

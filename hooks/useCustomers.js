@@ -1,15 +1,12 @@
 import { useState } from 'react'
-
-const url = 'http://localhost:8081/app/customers/'
+import { postOptions, _url } from 'services/Connection'
 
 const useCustomers = () => {
   const [customers, setCustomers] = useState([])
+  const [customerTypes, setCustomerTypes] = useState([])
 
   const getCustomers = async (page = 0, size = 10) => {
     try {
-<<<<<<< Updated upstream
-      await fetch(url)
-=======
       await fetch(`${_url}/customers/pageable?page=${page}&size=${size}`)
         .then(response => response.json())
         .then(data => {
@@ -25,9 +22,8 @@ const useCustomers = () => {
   const getCustomerTypes = async () => {
     try {
       await fetch(`${_url}/customers/type/`)
->>>>>>> Stashed changes
         .then(response => response.json())
-        .then(data => setCustomers(data))
+        .then(data => setCustomerTypes(data))
     } catch (e) {
       console.log(e)
     }
@@ -36,17 +32,52 @@ const useCustomers = () => {
   const newCustomer = async (data) => {
     let response
     try {
-      const requestOptions = {
-        method: 'POST',
-        body: JSON.stringify({
-          firstName: data.firstName,
-          lastName: data.lastName,
-          nit: data.nit,
-          createdAt: '2020-10-10'
-        }),
-        headers: { 'Content-Type': 'application/json' }
+      const allowedInput = []
+      for (let i = 0; i < Object.keys(data).length - 1; i++) {
+        allowedInput.push(`phone${i}`)
       }
-      await fetch(url, requestOptions)
+      const phones = Object.keys(Object.keys(data)
+        .filter(key => allowedInput.includes(key))
+        .reduce((obj, key) => {
+          obj[key] = data[key]
+          return obj
+        }, {}))
+        .map(key => data[key])
+      await fetch(`${_url}/customers/`, postOptions({
+        cliente: {
+          nombre: data.nombres,
+          apellidos: data.apellidos,
+          correo: data.correo,
+          direccion: data.direccion,
+          detalleCliente_id: data.customerType,
+          telefonos: phones.map(phone => {
+            return {
+              telefono: phone
+            }
+          })
+        }
+      }))
+        .then(response => response.json())
+        .then(result => {
+          console.log(result)
+          response = 'success'
+        })
+    } catch (e) {
+      console.log(e)
+      response = 'error'
+    }
+    return response
+  }
+
+  const newCustomerType = async (data) => {
+    let response
+    try {
+      await fetch(`${_url}/customers/type/`, postOptions({
+        detalle_cliente: {
+          nombre: data.name,
+          descuento: data.discount
+        }
+      }))
         .then(response => response.json())
         .then(result => {
           console.log(result)
@@ -62,7 +93,10 @@ const useCustomers = () => {
   return {
     getCustomers,
     newCustomer,
-    customers
+    customers,
+    newCustomerType,
+    getCustomerTypes,
+    customerTypes
   }
 }
 

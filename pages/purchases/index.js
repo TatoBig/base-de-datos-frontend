@@ -1,18 +1,19 @@
 import { Fragment } from 'react'
 
-import SalesList from 'components/sales/List'
+import PurchasesList from 'components/purchases/List'
 import Header from 'components/core/Header'
 
 const index = () => {
   return (
     <Fragment>
       <Header
-        title="Ventas"
-        link="/sales/new"
-        action="Nueva venta"
+        title="Compras"
+        link="/purchases/new"
+        action="Nuevo compras"
       />
-      <SalesList />
+      <PurchasesList />
     </Fragment>
+
   )
 }
 

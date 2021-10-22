@@ -43,7 +43,7 @@ const New = () => {
             error={errors.pass}
             control={control}
             label="Contraseña"
-            pass="pass"
+            name="pass"
           />
         </Form>
       </Card>

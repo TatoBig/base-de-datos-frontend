@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/dist/client/router'
@@ -9,14 +9,13 @@ import Card from 'components/core/Card'
 import Input from 'components/controls/Input'
 import Form from 'components/core/Form'
 import useCustomers from 'hooks/useCustomers'
+import PhoneInputs from 'components/customers/PhoneInputs'
+import Select from 'components/controls/Select'
 
 const schema = yup.object().shape({
-  firstName: yup.string().required('Debe ingresar un nombre'),
-  lastName: yup.string().required('Debe ingresar un apellido'),
-  nit: yup.string().required('Debe ingresar un NIT')
+  nombres: yup.string().required('Debe ingresar un nombre'),
+  customerType: yup.string().required('Debe asignar un tipo de cliente')
 })
-
-// const url = 'http://localhost:8081'
 
 const New = () => {
   const router = useRouter()
@@ -25,9 +24,21 @@ const New = () => {
     resolver: yupResolver(schema)
   })
 
-  const { newCustomer } = useCustomers()
+  const {
+    getCustomerTypes,
+    customerTypes,
+    newCustomer
+  } = useCustomers()
 
   const [disabledButton, setDisabledButton] = useState(false)
+
+  useEffect(() => {
+    getCustomerTypes()
+  }, [])
+
+  useEffect(() => {
+    console.log(customerTypes)
+  }, [customerTypes])
 
   const onSubmit = async (data) => {
     setDisabledButton(true)
@@ -43,23 +54,45 @@ const New = () => {
     <Fragment>
       <Card title="Título">
         <Form handleSubmit={handleSubmit} onSubmit={onSubmit} onCancel={() => router.push('/customers')} disableButton={disabledButton}>
-          <Input
-            error={errors.firstName}
+        <Input
+            error={errors.nombres}
             control={control}
             label="Nombre"
-            name="firstName"
+            name="nombres"
           />
           <Input
-            error={errors.lastName}
+            error={errors.apellidos}
             control={control}
             label="Apellido"
-            name="lastName"
+            name="apellidos"
           />
           <Input
-            error={errors.nit}
+            error={errors.direccion}
             control={control}
-            label="NIT"
-            name="nit"
+            label="Dirección"
+            name="direccion"
+          />
+          <Input
+            error={errors.correo}
+            control={control}
+            label="Correo"
+            name="correo"
+          />
+          <Select
+            control={control}
+            error={errors.customerType}
+            label="Tipo de cliente"
+            name="customerType"
+            items={customerTypes.map(type => {
+              return {
+                text: type.nombre,
+                value: type.id
+              }
+            })}
+          />
+          <PhoneInputs
+            control={control}
+            errors={errors}
           />
         </Form>
       </Card>
@@ -68,19 +101,3 @@ const New = () => {
 }
 
 export default New
-
-/*    try {
-      const requestOptions = {
-        method: 'POST',
-        body: JSON.stringify({ matrix: matrix }),
-        headers: { 'Content-Type': 'application/json' }
-      }
-      await fetch(`${url}/solution1`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          setDetResult(data.result)
-        })
-    } catch (e) {
-      console.log(e)
-    }
-    */
