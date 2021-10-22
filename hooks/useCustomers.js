@@ -5,9 +5,27 @@ const url = 'http://localhost:8081/app/customers/'
 const useCustomers = () => {
   const [customers, setCustomers] = useState([])
 
-  const getCustomers = async () => {
+  const getCustomers = async (page = 0, size = 10) => {
     try {
+<<<<<<< Updated upstream
       await fetch(url)
+=======
+      await fetch(`${_url}/customers/pageable?page=${page}&size=${size}`)
+        .then(response => response.json())
+        .then(data => {
+          if (!data.error) {
+            setCustomers(data)
+          }
+        })
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const getCustomerTypes = async () => {
+    try {
+      await fetch(`${_url}/customers/type/`)
+>>>>>>> Stashed changes
         .then(response => response.json())
         .then(data => setCustomers(data))
     } catch (e) {
