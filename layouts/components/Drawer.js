@@ -1,9 +1,8 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 import { Button } from '@material-ui/core'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { setPrimaryColor, setTheme } from 'store/palette'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { useSelector, useDispatch } from 'react-redux'
 import AppBar from '@material-ui/core/AppBar'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
@@ -20,6 +19,8 @@ import Typography from '@material-ui/core/Typography'
 import DrawerList from 'layouts/components/DrawerList'
 import Dialog from 'components/core/Dialog'
 import ThemeManager from 'components/theme/ThemeManager'
+import Select from 'components/controls/Select'
+import { changePort } from 'store/port'
 
 const drawerWidth = 240
 
@@ -85,12 +86,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function MiniDrawer () {
+export default function MiniDrawer() {
   const classes = useStyles()
   const theme = useTheme()
 
+  const { control, formState: { errors }, setValue } = useForm({
+    mode: 'onChange'
+  })
+
   const [open, setOpen] = useState(false)
   const [openTheme, setOpenTheme] = useState(false)
+  const dispatch = useDispatch()
+  const port = useSelector(state => state.port)
 
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -99,6 +106,23 @@ export default function MiniDrawer () {
   const handleDrawerClose = () => {
     setOpen(false)
   }
+
+  const selectedPort = useWatch({
+    control,
+    name: 'port',
+    defaultValue: port
+  })
+
+  useEffect(() => {
+    console.log(port)
+  }, [port])
+
+  useEffect(() => {
+    console.log(selectedPort)
+    dispatch(changePort({
+      port: selectedPort
+    }))
+  }, [selectedPort])
 
   return (
     <Fragment>
@@ -124,6 +148,22 @@ export default function MiniDrawer () {
           <Typography style={{ flexGrow: 1 }} variant="h6" noWrap>
             Proyecto de Base de Datos 2
           </Typography>
+          <Select
+            control={control}
+            label="Seleccionar servidor"
+            name="port"
+            id="input-port"
+            items={[
+              {
+                text: 'Servidor 1 (8080)',
+                value: '8080'
+              },
+              {
+                text: 'Servidor 2 (8081)',
+                value: '8081'
+              }
+            ]}
+          />
           <Button color="inherit" onClick={() => setOpenTheme(true)}>
             Cambiar tema de colores
           </Button>

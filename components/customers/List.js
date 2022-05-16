@@ -3,7 +3,6 @@ import { Fragment, useEffect, useState } from 'react'
 import useCustomers from 'hooks/useCustomers'
 
 import Table from 'components/core/Table'
-import DeleteIcon from '@material-ui/icons/Delete'
 import { Box, Button, IconButton, makeStyles, Tooltip, Typography } from '@material-ui/core'
 import { ArrowForward } from '@material-ui/icons'
 import ArrowBack from '@material-ui/icons/ArrowBack'
@@ -49,8 +48,7 @@ const List = () => {
         rows={customers.map(row => {
           return {
             id: row.id,
-            name: `${row.firstName} ${row.lastName || ''}`,
-            nit: row.nit
+            nit: row.nit,
             name: `${row.nombre} ${row.apellidos || ''}`,
             address: row.direccion || '',
             correo: row.correo || '',
@@ -67,16 +65,6 @@ const List = () => {
               } interactive>
                 <Button>{row.telefonoList?.length}</Button>
               </Tooltip>
-            <Tooltip title={
-              row.telefonoList?.map((phone, index) => (
-                <Fragment key={index}>
-                  <Typography variant="subtitle2" align="center">Telefono: {phone?.numero}</Typography>
-                  <Typography variant="subtitle2" align="center">--------------------------</Typography>
-                </Fragment>
-              ))
-            } interactive>
-              <Button>{row.telefonoList?.length}</Button>
-            </Tooltip>
           }
         })}
       />

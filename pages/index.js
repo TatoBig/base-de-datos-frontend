@@ -1,39 +1,12 @@
 import { Fragment, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
 import { useDispatch } from 'react-redux'
 
-import { useRouter } from 'next/dist/client/router'
-import Input from 'components/controls/Input'
-import { setPrimaryColor } from 'store/palette'
 import { Typography, Button } from '@material-ui/core'
-import Head from 'next/head'
 import Card from 'components/core/Card'
 import Header from 'components/core/Header'
 
 const Home = () => {
-  const router = useRouter()
   const dispatch = useDispatch()
-
-  // const classes = useStyles()
-  const { handleSubmit, control, formState: { errors } } = useForm({
-    mode: 'onChange',
-    resolver: yupResolver(schema)
-  })
-
-  const [input, setInput] = useState('')
-  const [message, setMessage] = useState(null)
-
-  const onSubmit = (data) => {
-    setMessage(data.test)
-  }
-
-  const changePrimaryColor = () => {
-    dispatch(setPrimaryColor({
-      primaryColor: '#000000'
-    }))
-  }
 
   const [state, setState] = useState([])
   const limit = 10001
@@ -53,7 +26,7 @@ const Home = () => {
         <Typography variant="h5" align="center">Jeffrey Reyes 1603719</Typography>
         <Typography variant="h5" align="center">Santiago Navas 1551619</Typography>
       </Card>
-      <Button variant="text" color="default" onClick={() => getAll()}>
+      <Button style={{ display: 'hidden' }} variant="text" color="default" onClick={() => getAll()}>
         Queries
       </Button>
       {state.map((num, index) => (
